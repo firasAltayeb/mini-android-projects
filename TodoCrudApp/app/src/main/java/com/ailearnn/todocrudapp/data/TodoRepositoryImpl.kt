@@ -11,11 +11,11 @@ class TodoRepositoryImpl(private val dao: TodoDao) : TodoRepository {
         dao.deleteTodo(todo)
     }
 
-    override suspend fun getTodo(id: Int): Todo? {
+    override suspend fun getTodoById(id: Int): Todo? {
         return dao.getTodoById(id)
     }
 
-    override fun getTodo(): Flow<List<Todo>> {
+    override fun getTodos(): Flow<List<Todo>> {
         return dao.getTodos()
     }
 }
