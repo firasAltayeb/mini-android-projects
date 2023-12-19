@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.ailearnn.todocrudapp.data.TodoDatabase
 import com.ailearnn.todocrudapp.data.TodoRepository
 import com.ailearnn.todocrudapp.data.TodoRepositoryImpl
+import com.ailearnn.todocrudapp.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +21,13 @@ object AppModule {
         return Room.databaseBuilder(
             app,
             TodoDatabase::class.java,
-            "todo_db"
-        ).build()
+            DATABASE_NAME
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
     @Singleton
     fun provideTodoRepository(db: TodoDatabase): TodoRepository {
-        return TodoRepositoryImpl(db.dao)
+        return TodoRepositoryImpl(db.getTodoDao)
     }
 }
