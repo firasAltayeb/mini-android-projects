@@ -1,4 +1,4 @@
-package com.ailearnn.todocrudapp.ui.theme.todo_list
+package com.ailearnn.todocrudapp.ui.todo_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,11 +6,13 @@ import com.ailearnn.todocrudapp.data.Todo
 import com.ailearnn.todocrudapp.data.TodoRepository
 import com.ailearnn.todocrudapp.util.Routes
 import com.ailearnn.todocrudapp.util.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class TodoListViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {

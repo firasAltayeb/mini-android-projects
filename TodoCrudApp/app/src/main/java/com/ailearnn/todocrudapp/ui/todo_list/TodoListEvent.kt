@@ -1,4 +1,4 @@
-package com.ailearnn.todocrudapp.ui.theme.todo_list
+package com.ailearnn.todocrudapp.ui.todo_list
 
 import com.ailearnn.todocrudapp.data.Todo
 
