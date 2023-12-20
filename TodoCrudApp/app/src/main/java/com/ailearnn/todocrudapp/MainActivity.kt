@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate(it.route)
                                 }
                             )
-
                         }
                         composable(
                             route = Routes.ADD_EDIT_TODO + "?todoId={todoId}",
