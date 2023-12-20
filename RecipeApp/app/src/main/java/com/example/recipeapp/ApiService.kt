@@ -4,10 +4,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private val retrofit = Retrofit.Builder().baseUrl("https://www.themealdb.com/api/json/v1/1/")
-    .addConverterFactory(GsonConverterFactory.create()).build()
+object RetrofitInstance {
+    private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
-val recipeService = retrofit.create(ApiService::class.java)
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    val recipeService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
+}
+
 
 interface ApiService {
     @GET("categories.php")

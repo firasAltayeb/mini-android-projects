@@ -14,23 +14,20 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun RecipeScreen(
     modifier: Modifier = Modifier,
+    viewState: MainViewModel.RecipeState,
     navigateToDetail: (Category) -> Unit
 ) {
-    val recipeViewModel: MainViewModel = viewModel()
-    val viewState by recipeViewModel.categoriesState
     Box(modifier = Modifier.fillMaxWidth()) {
         when {
             viewState.loading -> {
@@ -55,37 +52,29 @@ fun CategoriesScreen(
 ) {
     LazyVerticalGrid(GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
         items(categories) { category ->
-            CategoryItem(category = category, navigateToDetail)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
+                    .clickable {
+                        navigateToDetail(category)
+                    },
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(category.strCategoryThumb),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                )
+                Text(
+                    text = category.strCategory,
+                    color = Color.Black,
+                    style = TextStyle(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun CategoryItem(
-    category: Category,
-    navigateToDetail: (Category) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
-            .clickable {
-                navigateToDetail(category)
-            },
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(category.strCategoryThumb),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .aspectRatio(1f)
-        )
-        Text(
-            text = category.strCategory,
-            color = Color.Black,
-            style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(top = 4.dp)
-        )
     }
 }
