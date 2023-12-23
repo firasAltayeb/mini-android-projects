@@ -21,7 +21,7 @@ class AddEditTodoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    var todo by mutableStateOf<Todo?>(null)
+    var m_todo by mutableStateOf<Todo?>(null)
         private set
 
     var title by mutableStateOf("")
@@ -40,7 +40,7 @@ class AddEditTodoViewModel @Inject constructor(
                 repository.getTodoById(todoId)?.let { todo ->
                     title = todo.title
                     description = todo.description ?: ""
-                    this@AddEditTodoViewModel.todo = todo
+                    m_todo = todo
                 }
             }
         }
@@ -70,8 +70,8 @@ class AddEditTodoViewModel @Inject constructor(
                         Todo(
                             title = title,
                             description = description,
-                            isDone = todo?.isDone ?: false,
-                            id = todo?.id
+                            isDone = m_todo?.isDone ?: false,
+                            id = m_todo?.id
                         )
                     )
                     sendUiEvent(UiEvent.PopBackStack)

@@ -1,6 +1,5 @@
 package com.ailearnn.todocrudapp.ui.todo_list
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ailearnn.todocrudapp.util.UiEvent
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TodoListScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
@@ -39,6 +38,7 @@ fun TodoListScreen(
                     val result = snackBarHostState.showSnackbar(
                         message = event.message,
                         actionLabel = event.action,
+                        duration = SnackbarDuration.Short
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         viewModel.onEvent(
@@ -66,9 +66,11 @@ fun TodoListScreen(
             }
         },
 
-        ) {
+        ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = paddingValues.calculateBottomPadding())
         ) {
             items(todos.value) { todo ->
                 TodoItem(
