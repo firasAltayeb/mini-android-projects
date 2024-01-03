@@ -55,15 +55,13 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = HOME_SCREEN,
                         ) {
-                            HomeScreen(
-                                breedsList = breedsData,
-                                navigateToDetail = {
-                                    navController.navigate(DETAILS_SCREEN)
-                                }
-                            )
+                            HomeScreen(breedsList = breedsData) { breed ->
+                                navController.navigate("$DETAILS_SCREEN/${breed.id}")
+                            }
                         }
-                        composable(route = DETAILS_SCREEN) {
-                            DetailsScreen(breedsData[0])
+                        composable(route = "$DETAILS_SCREEN/{breedId}") {
+                            val breedId = it.arguments?.getString("breedId") ?: breedsData[0].id
+                            DetailsScreen(breedsList = breedsData, breedId)
                         }
                     }
                 }

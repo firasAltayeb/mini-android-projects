@@ -18,7 +18,11 @@ import com.ailearnn.catbreedsapp.data.Breed
 import com.ailearnn.catbreedsapp.ui.MainActivity
 
 @Composable
-fun DetailsScreen(breed: Breed) {
+fun DetailsScreen(
+    breedsList: List<Breed>,
+    breedId: String
+) {
+    val breed = breedsList.first { it.id == breedId }
     Column(
         modifier = Modifier
             .fillMaxSize()
