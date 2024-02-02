@@ -1,4 +1,3 @@
-
 package com.example.unscramble.data
 
 const val MAX_NO_OF_WORDS = 10
@@ -21,7 +20,7 @@ val allWords: Set<String> =
 
 /**
  * Maps words to their lengths. Each word in allWords has a unique length. This is required since
- * the words are randomly picked inside GameViewModel and the selection is unpredictable.
+ * the words are randomly picked inside com.example.unscramble.ui.GameViewModel and the selection is unpredictable.
  */
 private val wordLengthMap: Map<Int, String> = allWords.associateBy({ it.length }, { it })
 
