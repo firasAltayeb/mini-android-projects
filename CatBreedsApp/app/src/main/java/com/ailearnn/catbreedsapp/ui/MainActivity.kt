@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         viewModel = BreedsViewModel()
 
         setContent {
-            // Set up to observe the ViewModel's LiveData and update the composable state as it's value changes
+            // Setup to observe ViewModel's LiveData & update  composable state as it's changes
             var breedsData: List<Breed> by remember { mutableStateOf(emptyList()) }
             viewModel.breedsLiveData.observe(this) {
                 breedsData = it.data ?: emptyList()

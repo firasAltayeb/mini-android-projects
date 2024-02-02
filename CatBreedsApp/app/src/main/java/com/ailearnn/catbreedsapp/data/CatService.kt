@@ -27,4 +27,19 @@ object CatService {
     val service: ICatService by lazy {
         retrofit.create(ICatService::class.java)
     }
+
+//    private lateinit var service: ICatService
+//
+//    fun init() {
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://api.thecatapi.com/v1/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//
+//        service = retrofit.create(ICatService::class.java)
+//    }
+//
+//    fun getService(): ICatService {
+//        return service
+//    }
 }

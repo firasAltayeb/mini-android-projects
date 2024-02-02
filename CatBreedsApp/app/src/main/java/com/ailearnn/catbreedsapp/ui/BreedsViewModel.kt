@@ -11,10 +11,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BreedsViewModel : ViewModel() {
-
     private val _breedsLiveData = MutableLiveData<BreedsResult>()
     val breedsLiveData: LiveData<BreedsResult>
         get() = _breedsLiveData
+
+//    var breedsLiveData = MutableLiveData<BreedsResult>()
+//        private set
 
     fun getBreeds() {
         viewModelScope.launch(Dispatchers.IO) {

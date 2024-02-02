@@ -22,7 +22,9 @@ fun DetailsScreen(
     breedsList: List<Breed>,
     breedId: String
 ) {
-    val breed = breedsList.first { it.id == breedId }
+    val breed = breedsList.first(predicate = { it.id == breedId })
+//    val breed = breedsList.first { it.id == breedId }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
