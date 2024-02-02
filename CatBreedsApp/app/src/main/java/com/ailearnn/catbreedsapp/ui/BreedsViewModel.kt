@@ -1,33 +1,38 @@
 package com.ailearnn.catbreedsapp.ui
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ailearnn.catbreedsapp.data.Breed
 import com.ailearnn.catbreedsapp.data.CatService
+import com.ailearnn.catbreedsapp.data.ICatService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class BreedsViewModel : ViewModel() {
-    private val _breedsLiveData = MutableLiveData<BreedsResult>()
-    val breedsLiveData: LiveData<BreedsResult>
-        get() = _breedsLiveData
+class BreedsViewModel(private val catService: ICatService = CatService.service) : ViewModel() {
+    private val _breedsLiveData = MutableStateFlow(BreedsResult())
+    val breedsLiveData: StateFlow<BreedsResult> = _breedsLiveData.asStateFlow()
 
-//    var breedsLiveData = MutableLiveData<BreedsResult>()
-//        private set
+    //var breedsLiveData = MutableLiveData<BreedsResult>()
+    //    private set
 
     fun getBreeds() {
         viewModelScope.launch(Dispatchers.IO) {
-            val apiResult = CatService.service.getBreeds()
+            val apiResult = catService.getBreeds()
 
-            Log.d(BreedsViewModel::class.simpleName, "$apiResult")
+            //Log.d(BreedsViewModel::class.simpleName, "$apiResult")
 
             if (apiResult.isEmpty()) {
-                _breedsLiveData.postValue(BreedsResult(error = "Empty list of breeds retrieved from API"))
+                _breedsLiveData.update { currentData ->
+                    currentData.copy(error = "Empty list of breeds retrieved from API")
+                }
             } else {
-                _breedsLiveData.postValue(BreedsResult(data = apiResult))
+                _breedsLiveData.update { currentData ->
+                    currentData.copy(data = apiResult)
+                }
             }
         }
     }
