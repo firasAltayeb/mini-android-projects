@@ -1,6 +1,5 @@
 package com.example.unscramble.ui
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,7 +25,6 @@ class GameViewModel : ViewModel() {
     private fun pickRandomWordAndShuffle(): String {
         // Continue picking up a new random word until you get one that hasn't been used before
         currentWord = allWords.random()
-        Log.d("GameViewModel", currentWord)
         return if (usedWords.contains(currentWord)) {
             pickRandomWordAndShuffle()
         } else {
@@ -90,7 +88,9 @@ class GameViewModel : ViewModel() {
 
     fun resetGame() {
         usedWords.clear()
-        _uiState.value = GameUiState(currentScrambledWord = pickRandomWordAndShuffle())
+        _uiState.value = GameUiState(
+            currentScrambledWord = pickRandomWordAndShuffle()
+        )
     }
 
     init {
