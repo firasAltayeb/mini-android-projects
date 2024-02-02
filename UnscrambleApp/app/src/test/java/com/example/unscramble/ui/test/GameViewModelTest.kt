@@ -1,4 +1,4 @@
-package com.example.android.unscramble.ui.test
+package com.example.unscramble.ui.test
 
 import com.example.unscramble.data.MAX_NO_OF_WORDS
 import com.example.unscramble.data.SCORE_INCREASE
