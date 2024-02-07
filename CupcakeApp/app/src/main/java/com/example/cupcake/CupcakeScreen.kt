@@ -42,7 +42,6 @@ enum class CupcakeScreen(@StringRes val title: Int) {
     Summary(title = R.string.order_summary)
 }
 
-
 @Composable
 fun CupcakeAppBar(
     currentScreen: CupcakeScreen,

@@ -19,21 +19,6 @@ import java.util.Calendar
 import java.util.Locale
 
 class CupcakeScreenNavigationTest {
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
-
-    private lateinit var navController: TestNavHostController
-
-    @Before
-    fun setupCupcakeNavHost() {
-        composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current).apply {
-                navigatorProvider.addNavigator(ComposeNavigator())
-            }
-            CupcakeApp()
-        }
-    }
-
     private fun getFormattedDate(): String {
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
         val calendar = Calendar.getInstance()
@@ -67,6 +52,21 @@ class CupcakeScreenNavigationTest {
         composeTestRule.onNodeWithContentDescription(backText).performClick()
     }
 
+    private lateinit var navController: TestNavHostController
+
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+
+    @Before
+    fun setupCupcakeNavHost() {
+        composeTestRule.setContent {
+            navController = TestNavHostController(LocalContext.current).apply {
+                navigatorProvider.addNavigator(ComposeNavigator())
+            }
+            CupcakeApp(navController = navController)
+        }
+    }
+    
     @Test
     fun cupcakeNavHost_verifyStartDestination() {
         navController.assertCurrentRouteName(CupcakeScreen.Start.name)
