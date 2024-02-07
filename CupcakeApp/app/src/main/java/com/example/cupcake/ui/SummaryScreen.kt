@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,21 +18,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.cupcake.R
 import com.example.cupcake.data.OrderUiState
 import com.example.cupcake.ui.components.FormattedPriceLabel
-import com.example.cupcake.ui.theme.CupcakeTheme
 
-/**
- * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
- * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
- * lambda
- */
+
 @Composable
 fun OrderSummaryScreen(
     orderUiState: OrderUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCancelButtonClicked: () -> Unit = {},
+    onSendButtonClicked: (String, String) -> Unit = { _, _ -> },
 ) {
     val resources = LocalContext.current.resources
 
@@ -94,22 +89,11 @@ fun OrderSummaryScreen(
                 }
                 OutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = onCancelButtonClicked
                 ) {
                     Text(stringResource(R.string.cancel))
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun OrderSummaryPreview() {
-    CupcakeTheme {
-        OrderSummaryScreen(
-            orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-            modifier = Modifier.fillMaxHeight()
-        )
     }
 }

@@ -89,15 +89,21 @@ fun CupcakeApp(
                     quantityOptions = DataSource.quantityOptions,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                    onNextButtonClicked = {
+                        viewModel.setQuantity(it)
+                        navController.navigate(CupcakeScreen.Flavor.name)
+                    }
                 )
             }
             composable(route = CupcakeScreen.Flavor.name) {
                 val context = LocalContext.current
                 SelectOptionScreen(
                     subtotal = uiState.price,
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
+                    onCancelButtonClicked = {},
                     options = DataSource.flavors.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { selection -> viewModel.setFlavor(selection) },
+                    onSelectionChanged = { viewModel.setFlavor(it) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
@@ -105,6 +111,8 @@ fun CupcakeApp(
                 SelectOptionScreen(
                     subtotal = uiState.price,
                     options = uiState.pickupOptions,
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
+                    onCancelButtonClicked = {},
                     onSelectionChanged = { viewModel.setDate(it) },
                     modifier = Modifier.fillMaxHeight()
                 )
@@ -112,7 +120,10 @@ fun CupcakeApp(
             composable(route = CupcakeScreen.Summary.name) {
                 OrderSummaryScreen(
                     orderUiState = uiState,
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxHeight(),
+                    onSendButtonClicked = { subject: String, summary: String ->
+
+                    },
                 )
             }
         }
@@ -121,6 +132,6 @@ fun CupcakeApp(
 
 @Preview
 @Composable
-fun CupcakeAppPreview(){
+fun CupcakeAppPreview() {
     CupcakeApp()
 }

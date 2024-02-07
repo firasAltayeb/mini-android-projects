@@ -5,10 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
@@ -20,21 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.cupcake.R
-import com.example.cupcake.data.DataSource
-import com.example.cupcake.ui.theme.CupcakeTheme
 
-/**
- * Composable that allows the user to select the desired cupcake quantity and expects
- * [onNextButtonClicked] lambda that expects the selected quantity and triggers the navigation to
- * next screen
- */
+
 @Composable
 fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNextButtonClicked: (Int) -> Unit = {},
 ) {
     Column(
         modifier = modifier,
@@ -68,17 +60,14 @@ fun StartOrderScreen(
             quantityOptions.forEach { item ->
                 SelectQuantityButton(
                     labelResourceId = item.first,
-                    onClick = {}
+                    onClick = { onNextButtonClicked(item.second) }
                 )
             }
         }
     }
 }
 
-/**
- * Customizable button composable that displays the [labelResourceId]
- * and triggers [onClick] lambda when this composable is clicked
- */
+
 @Composable
 fun SelectQuantityButton(
     @StringRes labelResourceId: Int,
@@ -90,18 +79,5 @@ fun SelectQuantityButton(
         modifier = modifier.widthIn(min = 250.dp)
     ) {
         Text(stringResource(labelResourceId))
-    }
-}
-
-@Preview
-@Composable
-fun StartOrderPreview() {
-    CupcakeTheme {
-        StartOrderScreen(
-            quantityOptions = DataSource.quantityOptions,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(dimensionResource(R.dimen.padding_medium))
-        )
     }
 }

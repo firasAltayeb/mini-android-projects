@@ -3,7 +3,6 @@ package com.example.cupcake.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
@@ -21,23 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.cupcake.R
 import com.example.cupcake.ui.components.FormattedPriceLabel
-import com.example.cupcake.ui.theme.CupcakeTheme
 
-/**
- * Composable that displays the list of items as [RadioButton] options,
- * [onSelectionChanged] lambda that notifies the parent composable when a new value is selected,
- * [onCancelButtonClicked] lambda that cancels the order when user clicks cancel and
- * [onNextButtonClicked] lambda that triggers the navigation to next screen
- */
 @Composable
 fun SelectOptionScreen(
     subtotal: String,
     options: List<String>,
+    modifier: Modifier = Modifier,
     onSelectionChanged: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    onCancelButtonClicked: () -> Unit = {},
+    onNextButtonClicked: () -> Unit = {},
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
@@ -90,7 +83,7 @@ fun SelectOptionScreen(
         ) {
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = {}
+                onClick = onCancelButtonClicked
             ) {
                 Text(stringResource(R.string.cancel))
             }
@@ -98,22 +91,10 @@ fun SelectOptionScreen(
                 modifier = Modifier.weight(1f),
                 // the button is enabled when the user makes a selection
                 enabled = selectedValue.isNotEmpty(),
-                onClick = {}
+                onClick = onNextButtonClicked
             ) {
                 Text(stringResource(R.string.next))
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun SelectOptionPreview() {
-    CupcakeTheme {
-        SelectOptionScreen(
-            subtotal = "299.99",
-            options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-            modifier = Modifier.fillMaxHeight()
-        )
     }
 }
